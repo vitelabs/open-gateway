@@ -1,0 +1,10 @@
+{
+  "code": 0,
+  "subCode": 0,
+  "msg": null,
+  "data": {
+    "type": 1,
+    "depositState": "OPEN",
+    "withdrawState": "OPEN"
+  }
+}

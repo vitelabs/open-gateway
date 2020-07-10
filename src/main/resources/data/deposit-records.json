@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "subCode": 0,
+  "msg": null,
+  "data": {
+    "totalCount": 1,
+    "depositRecords": [
+      {
+        "inTxHash": "a3a173eb-8e99-441a-a9ca-01e368c0ec85",
+        "inTxConfirmedCount": null,
+        "inTxConfirmationCount": null,
+        "outTxHash": "8237c21487d5b36cc672dda29e9ec49667c8cee7a94a14d746f489c000e1a520",
+        "amount": "10000000000",
+        "fee": "0",
+        "state": "TOT_CONFIRMED",
+        "dateTime": "1564493269000"
+      }
+    ],
+    "inTxExplorerFormat": "http://{$tx}",
+    "outTxExplorerFormat": "https://explorer.vite.net/transaction/{$tx}"
+  }
+}

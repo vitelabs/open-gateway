@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.vite.gateway.database.dao.mapper.generated.CrossChainTransferMapper">
+  <resultMap id="BaseResultMap" type="org.vite.gateway.database.po.generated.CrossChainTransfer">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="blockchain_source" jdbcType="VARCHAR" property="blockchainSource" />
+    <result column="token_id_source" jdbcType="VARCHAR" property="tokenIdSource" />
+    <result column="hash_source" jdbcType="VARCHAR" property="hashSource" />
+    <result column="from_address_source" jdbcType="VARCHAR" property="fromAddressSource" />
+    <result column="to_address_source" jdbcType="VARCHAR" property="toAddressSource" />
+    <result column="memo_source" jdbcType="VARCHAR" property="memoSource" />
+    <result column="fee_source" jdbcType="DOUBLE" property="feeSource" />
+    <result column="confirmations_source" jdbcType="BIGINT" property="confirmationsSource" />
+    <result column="transaction_time_source" jdbcType="TIMESTAMP" property="transactionTimeSource" />
+    <result column="blockchain_dest" jdbcType="VARCHAR" property="blockchainDest" />
+    <result column="token_id_dest" jdbcType="VARCHAR" property="tokenIdDest" />
+    <result column="hash_dest" jdbcType="VARCHAR" property="hashDest" />
+    <result column="from_address_dest" jdbcType="VARCHAR" property="fromAddressDest" />
+    <result column="to_address_dest" jdbcType="VARCHAR" property="toAddressDest" />
+    <result column="memo_dest" jdbcType="VARCHAR" property="memoDest" />
+    <result column="fee_dest" jdbcType="DOUBLE" property="feeDest" />
+    <result column="confirmations_dest" jdbcType="BIGINT" property="confirmationsDest" />
+    <result column="transaction_time_dest" jdbcType="TIMESTAMP" property="transactionTimeDest" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="utime" jdbcType="TIMESTAMP" property="utime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, amount, blockchain_source, token_id_source, hash_source, from_address_source, 
+    to_address_source, memo_source, fee_source, confirmations_source, transaction_time_source, 
+    blockchain_dest, token_id_dest, hash_dest, from_address_dest, to_address_dest, memo_dest, 
+    fee_dest, confirmations_dest, transaction_time_dest, `state`, ctime, utime
+  </sql>
+  <select id="selectByExample" parameterType="org.vite.gateway.database.po.generated.CrossChainTransferCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from crosschain_transfer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from crosschain_transfer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from crosschain_transfer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.vite.gateway.database.po.generated.CrossChainTransferCriteria">
+    delete from crosschain_transfer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.vite.gateway.database.po.generated.CrossChainTransfer">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into crosschain_transfer (amount, blockchain_source, token_id_source, 
+      hash_source, from_address_source, to_address_source, 
+      memo_source, fee_source, confirmations_source, 
+      transaction_time_source, blockchain_dest, 
+      token_id_dest, hash_dest, from_address_dest, 
+      to_address_dest, memo_dest, fee_dest, 
+      confirmations_dest, transaction_time_dest, 
+      `state`, ctime, utime
+      )
+    values (#{amount,jdbcType=DOUBLE}, #{blockchainSource,jdbcType=VARCHAR}, #{tokenIdSource,jdbcType=VARCHAR}, 
+      #{hashSource,jdbcType=VARCHAR}, #{fromAddressSource,jdbcType=VARCHAR}, #{toAddressSource,jdbcType=VARCHAR}, 
+      #{memoSource,jdbcType=VARCHAR}, #{feeSource,jdbcType=DOUBLE}, #{confirmationsSource,jdbcType=BIGINT}, 
+      #{transactionTimeSource,jdbcType=TIMESTAMP}, #{blockchainDest,jdbcType=VARCHAR}, 
+      #{tokenIdDest,jdbcType=VARCHAR}, #{hashDest,jdbcType=VARCHAR}, #{fromAddressDest,jdbcType=VARCHAR}, 
+      #{toAddressDest,jdbcType=VARCHAR}, #{memoDest,jdbcType=VARCHAR}, #{feeDest,jdbcType=DOUBLE}, 
+      #{confirmationsDest,jdbcType=BIGINT}, #{transactionTimeDest,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}, #{utime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.vite.gateway.database.po.generated.CrossChainTransfer">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into crosschain_transfer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="blockchainSource != null">
+        blockchain_source,
+      </if>
+      <if test="tokenIdSource != null">
+        token_id_source,
+      </if>
+      <if test="hashSource != null">
+        hash_source,
+      </if>
+      <if test="fromAddressSource != null">
+        from_address_source,
+      </if>
+      <if test="toAddressSource != null">
+        to_address_source,
+      </if>
+      <if test="memoSource != null">
+        memo_source,
+      </if>
+      <if test="feeSource != null">
+        fee_source,
+      </if>
+      <if test="confirmationsSource != null">
+        confirmations_source,
+      </if>
+      <if test="transactionTimeSource != null">
+        transaction_time_source,
+      </if>
+      <if test="blockchainDest != null">
+        blockchain_dest,
+      </if>
+      <if test="tokenIdDest != null">
+        token_id_dest,
+      </if>
+      <if test="hashDest != null">
+        hash_dest,
+      </if>
+      <if test="fromAddressDest != null">
+        from_address_dest,
+      </if>
+      <if test="toAddressDest != null">
+        to_address_dest,
+      </if>
+      <if test="memoDest != null">
+        memo_dest,
+      </if>
+      <if test="feeDest != null">
+        fee_dest,
+      </if>
+      <if test="confirmationsDest != null">
+        confirmations_dest,
+      </if>
+      <if test="transactionTimeDest != null">
+        transaction_time_dest,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="utime != null">
+        utime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="blockchainSource != null">
+        #{blockchainSource,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenIdSource != null">
+        #{tokenIdSource,jdbcType=VARCHAR},
+      </if>
+      <if test="hashSource != null">
+        #{hashSource,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAddressSource != null">
+        #{fromAddressSource,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddressSource != null">
+        #{toAddressSource,jdbcType=VARCHAR},
+      </if>
+      <if test="memoSource != null">
+        #{memoSource,jdbcType=VARCHAR},
+      </if>
+      <if test="feeSource != null">
+        #{feeSource,jdbcType=DOUBLE},
+      </if>
+      <if test="confirmationsSource != null">
+        #{confirmationsSource,jdbcType=BIGINT},
+      </if>
+      <if test="transactionTimeSource != null">
+        #{transactionTimeSource,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blockchainDest != null">
+        #{blockchainDest,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenIdDest != null">
+        #{tokenIdDest,jdbcType=VARCHAR},
+      </if>
+      <if test="hashDest != null">
+        #{hashDest,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAddressDest != null">
+        #{fromAddressDest,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddressDest != null">
+        #{toAddressDest,jdbcType=VARCHAR},
+      </if>
+      <if test="memoDest != null">
+        #{memoDest,jdbcType=VARCHAR},
+      </if>
+      <if test="feeDest != null">
+        #{feeDest,jdbcType=DOUBLE},
+      </if>
+      <if test="confirmationsDest != null">
+        #{confirmationsDest,jdbcType=BIGINT},
+      </if>
+      <if test="transactionTimeDest != null">
+        #{transactionTimeDest,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utime != null">
+        #{utime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.vite.gateway.database.po.generated.CrossChainTransferCriteria" resultType="java.lang.Long">
+    select count(*) from crosschain_transfer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update crosschain_transfer
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.blockchainSource != null">
+        blockchain_source = #{record.blockchainSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tokenIdSource != null">
+        token_id_source = #{record.tokenIdSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hashSource != null">
+        hash_source = #{record.hashSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromAddressSource != null">
+        from_address_source = #{record.fromAddressSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toAddressSource != null">
+        to_address_source = #{record.toAddressSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memoSource != null">
+        memo_source = #{record.memoSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeSource != null">
+        fee_source = #{record.feeSource,jdbcType=DOUBLE},
+      </if>
+      <if test="record.confirmationsSource != null">
+        confirmations_source = #{record.confirmationsSource,jdbcType=BIGINT},
+      </if>
+      <if test="record.transactionTimeSource != null">
+        transaction_time_source = #{record.transactionTimeSource,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.blockchainDest != null">
+        blockchain_dest = #{record.blockchainDest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tokenIdDest != null">
+        token_id_dest = #{record.tokenIdDest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hashDest != null">
+        hash_dest = #{record.hashDest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromAddressDest != null">
+        from_address_dest = #{record.fromAddressDest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toAddressDest != null">
+        to_address_dest = #{record.toAddressDest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memoDest != null">
+        memo_dest = #{record.memoDest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeDest != null">
+        fee_dest = #{record.feeDest,jdbcType=DOUBLE},
+      </if>
+      <if test="record.confirmationsDest != null">
+        confirmations_dest = #{record.confirmationsDest,jdbcType=BIGINT},
+      </if>
+      <if test="record.transactionTimeDest != null">
+        transaction_time_dest = #{record.transactionTimeDest,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null">
+        `state` = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
+        ctime = #{record.ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.utime != null">
+        utime = #{record.utime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update crosschain_transfer
+    set id = #{record.id,jdbcType=BIGINT},
+      amount = #{record.amount,jdbcType=DOUBLE},
+      blockchain_source = #{record.blockchainSource,jdbcType=VARCHAR},
+      token_id_source = #{record.tokenIdSource,jdbcType=VARCHAR},
+      hash_source = #{record.hashSource,jdbcType=VARCHAR},
+      from_address_source = #{record.fromAddressSource,jdbcType=VARCHAR},
+      to_address_source = #{record.toAddressSource,jdbcType=VARCHAR},
+      memo_source = #{record.memoSource,jdbcType=VARCHAR},
+      fee_source = #{record.feeSource,jdbcType=DOUBLE},
+      confirmations_source = #{record.confirmationsSource,jdbcType=BIGINT},
+      transaction_time_source = #{record.transactionTimeSource,jdbcType=TIMESTAMP},
+      blockchain_dest = #{record.blockchainDest,jdbcType=VARCHAR},
+      token_id_dest = #{record.tokenIdDest,jdbcType=VARCHAR},
+      hash_dest = #{record.hashDest,jdbcType=VARCHAR},
+      from_address_dest = #{record.fromAddressDest,jdbcType=VARCHAR},
+      to_address_dest = #{record.toAddressDest,jdbcType=VARCHAR},
+      memo_dest = #{record.memoDest,jdbcType=VARCHAR},
+      fee_dest = #{record.feeDest,jdbcType=DOUBLE},
+      confirmations_dest = #{record.confirmationsDest,jdbcType=BIGINT},
+      transaction_time_dest = #{record.transactionTimeDest,jdbcType=TIMESTAMP},
+      `state` = #{record.state,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=TIMESTAMP},
+      utime = #{record.utime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.vite.gateway.database.po.generated.CrossChainTransfer">
+    update crosschain_transfer
+    <set>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="blockchainSource != null">
+        blockchain_source = #{blockchainSource,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenIdSource != null">
+        token_id_source = #{tokenIdSource,jdbcType=VARCHAR},
+      </if>
+      <if test="hashSource != null">
+        hash_source = #{hashSource,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAddressSource != null">
+        from_address_source = #{fromAddressSource,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddressSource != null">
+        to_address_source = #{toAddressSource,jdbcType=VARCHAR},
+      </if>
+      <if test="memoSource != null">
+        memo_source = #{memoSource,jdbcType=VARCHAR},
+      </if>
+      <if test="feeSource != null">
+        fee_source = #{feeSource,jdbcType=DOUBLE},
+      </if>
+      <if test="confirmationsSource != null">
+        confirmations_source = #{confirmationsSource,jdbcType=BIGINT},
+      </if>
+      <if test="transactionTimeSource != null">
+        transaction_time_source = #{transactionTimeSource,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blockchainDest != null">
+        blockchain_dest = #{blockchainDest,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenIdDest != null">
+        token_id_dest = #{tokenIdDest,jdbcType=VARCHAR},
+      </if>
+      <if test="hashDest != null">
+        hash_dest = #{hashDest,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAddressDest != null">
+        from_address_dest = #{fromAddressDest,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddressDest != null">
+        to_address_dest = #{toAddressDest,jdbcType=VARCHAR},
+      </if>
+      <if test="memoDest != null">
+        memo_dest = #{memoDest,jdbcType=VARCHAR},
+      </if>
+      <if test="feeDest != null">
+        fee_dest = #{feeDest,jdbcType=DOUBLE},
+      </if>
+      <if test="confirmationsDest != null">
+        confirmations_dest = #{confirmationsDest,jdbcType=BIGINT},
+      </if>
+      <if test="transactionTimeDest != null">
+        transaction_time_dest = #{transactionTimeDest,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utime != null">
+        utime = #{utime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.vite.gateway.database.po.generated.CrossChainTransfer">
+    update crosschain_transfer
+    set amount = #{amount,jdbcType=DOUBLE},
+      blockchain_source = #{blockchainSource,jdbcType=VARCHAR},
+      token_id_source = #{tokenIdSource,jdbcType=VARCHAR},
+      hash_source = #{hashSource,jdbcType=VARCHAR},
+      from_address_source = #{fromAddressSource,jdbcType=VARCHAR},
+      to_address_source = #{toAddressSource,jdbcType=VARCHAR},
+      memo_source = #{memoSource,jdbcType=VARCHAR},
+      fee_source = #{feeSource,jdbcType=DOUBLE},
+      confirmations_source = #{confirmationsSource,jdbcType=BIGINT},
+      transaction_time_source = #{transactionTimeSource,jdbcType=TIMESTAMP},
+      blockchain_dest = #{blockchainDest,jdbcType=VARCHAR},
+      token_id_dest = #{tokenIdDest,jdbcType=VARCHAR},
+      hash_dest = #{hashDest,jdbcType=VARCHAR},
+      from_address_dest = #{fromAddressDest,jdbcType=VARCHAR},
+      to_address_dest = #{toAddressDest,jdbcType=VARCHAR},
+      memo_dest = #{memoDest,jdbcType=VARCHAR},
+      fee_dest = #{feeDest,jdbcType=DOUBLE},
+      confirmations_dest = #{confirmationsDest,jdbcType=BIGINT},
+      transaction_time_dest = #{transactionTimeDest,jdbcType=TIMESTAMP},
+      `state` = #{state,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      utime = #{utime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

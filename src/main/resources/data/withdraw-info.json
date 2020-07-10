@@ -1,0 +1,12 @@
+{
+  "code": 0,
+  "subCode": 0,
+  "msg": null,
+  "data": {
+    "minimumWithdrawAmount": "1000000000000000000000",
+    "maximumWithdrawAmount": "10000000000000000000000000",
+    "gatewayAddress": "vite_004ac673083caacd99a2f8a2257a1f393990889d513c36e08a",
+    "labelName": null,
+    "noticeMsg": null
+  }
+}

@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/gateway?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: root
+
+gateway:
+  originBlockchain: litecoin
+  mappingBlockchain: vite
+  originTokenId: LTC
+  mappingTokenId: tti_c5a9d0ba7dbdc8aa0e135c8e
+  depositLabel: Memo
+  depositNotice: This is the deposit notice.
+  withdrawLabel: Memo
+  withdrawNotice: This is the withdraw notice.
+
+vite:
+  tokenId: tti_c5a9d0ba7dbdc8aa0e135c8e
+  net: mainnet
+  addressType: 1
+  address: vite_0996e651f3885e6e6b83dfba8caa095ff7aa248e4a429db7bd
+  decimals: 8
+  confirmations: 150
+  explorerUrl: https://vitescan.io/tx/{$tx}
+  rpcUrl: http://127.0.0.1:48132
+  coldAddress: vite_098dfae02679a4ca05a4c8bf5dd00a8757f0c622bfccce7d68
+  mnemonics: check, clump, quote, iron, proud, differ, artist, net, color, helmet, relax, fiction, drop, wrong, permit, thank, holiday, trash, agree, coin, reason, trophy, parent, shop
+
+litecoin:
+  tokenId: LTC
+  net: testnet
+  addressType: 0
+  address:
+  decimals: 8
+  confirmations: 2
+  explorerUrl: https://blockexplorer.one/ltc/testnet/tx/{$tx}
+  rpcUrl: http://localhost:19332
+  rpcUser: user
+  rpcPassword: password

@@ -1,0 +1,13 @@
+{
+  "code": 0,
+  "subCode": 0,
+  "msg": null,
+  "data": {
+    "depositAddress": "Address_GiveMeMoney",
+    "labelName": "Description",
+    "label": "1234567",
+    "minimumDepositAmount": "26800000000",
+    "confirmationCount": 10,
+    "noticeMsg": "充值小于最小金额将无法到账"
+  }
+}

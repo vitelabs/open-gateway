@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "subCode": 0,
+  "msg": null,
+  "data": {
+    "totalCount": 1,
+    "withdrawRecords": [
+      {
+        "inTxHash": "2b11e9daea3315eedfb5e44562a2f6800d0709fc2859f546831774a2d4a695a2",
+        "inTxConfirmedCount": null,
+        "inTxConfirmationCount": null,
+        "outTxHash": "581ad9ba3f38cbcfa5b2ac0a0361a92f0ae77dddb4dfa3f90f83a72e3bea58b6",
+        "amount": "499950000",
+        "fee": "50000",
+        "state": "OPPOSITE_CONFIRMED",
+        "dateTime": "1584346230000"
+      }
+    ],
+    "inTxExplorerFormat": "",
+    "outTxExplorerFormat": ""
+  }
+}
