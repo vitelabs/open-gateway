@@ -17,8 +17,8 @@ import org.vite.gateway.model.enums.CrossChainTransferState;
 import org.vite.gateway.model.enums.DepositAddressState;
 import org.vite.gateway.model.enums.DepositRecordState;
 import org.vite.gateway.model.enums.WithdrawRecordState;
+import org.vite.gateway.util.NumberUtil;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -111,10 +111,11 @@ public class DefaultGatewayService implements GatewayService {
         if (tokenInfo == null) {
             return null;
         }
+        int decimals = blockchainDelegate.getDecimals();
 
         WithdrawInfo withdrawInfo = new WithdrawInfo();
-        withdrawInfo.setMinimumWithdrawAmount("" + tokenInfo.getMinWithdrawAmount());
-        withdrawInfo.setMaximumWithdrawAmount("" + tokenInfo.getMaxWithdrawAmount());
+        withdrawInfo.setMinimumWithdrawAmount(NumberUtil.toViteAmount(tokenInfo.getMinWithdrawAmount(), decimals));
+        withdrawInfo.setMaximumWithdrawAmount(NumberUtil.toViteAmount(tokenInfo.getMaxWithdrawAmount(), decimals));
         withdrawInfo.setGatewayAddress(withdrawAddress);
         withdrawInfo.setLabelName(withdrawLabel);
         withdrawInfo.setNoticeMsg(withdrawNotice);
@@ -138,7 +139,7 @@ public class DefaultGatewayService implements GatewayService {
         }
         WithdrawFee result = new WithdrawFee();
         // TODO: dynamic fee
-        result.setFee(formatAmount(tokenInfo.getWithdrawFee(), blockchainDelegate.getDecimals()));
+        result.setFee(NumberUtil.toViteAmount(tokenInfo.getWithdrawFee(), blockchainDelegate.getDecimals()));
 
         return result;
     }
@@ -165,8 +166,8 @@ public class DefaultGatewayService implements GatewayService {
                         DepositRecords.DepositRecordItem item = new DepositRecords.DepositRecordItem();
                         item.setInTxHash(record.getHashSource());
                         // format amount and fee by decimals: 1.23 (4 decimals) -> 12300
-                        item.setAmount(formatAmount(record.getAmount(), decimals));
-                        item.setFee(formatAmount(record.getFeeSource(), decimals));
+                        item.setAmount(NumberUtil.toViteAmount(record.getAmount(), decimals));
+                        item.setFee(NumberUtil.toViteAmount(record.getFeeSource(), decimals));
                         item.setInTxConfirmedCount(record.getConfirmationsSource().intValue());
                         item.setOutTxHash(record.getHashDest());
                         item.setState(mappingDepositRecordState(record.getState()).toString());
@@ -206,8 +207,8 @@ public class DefaultGatewayService implements GatewayService {
                         WithdrawRecords.WithdrawRecordItem item = new WithdrawRecords.WithdrawRecordItem();
                         item.setInTxHash(record.getHashSource());
                         // format amount and fee by decimals: 1.23 (4 decimals) -> 12300
-                        item.setAmount(formatAmount(record.getAmount(), decimals));
-                        item.setFee(formatAmount(record.getFeeSource(), decimals));
+                        item.setAmount(NumberUtil.toViteAmount(record.getAmount(), decimals));
+                        item.setFee(NumberUtil.toViteAmount(record.getFeeSource(), decimals));
                         item.setInTxConfirmedCount(record.getConfirmationsSource().intValue());
                         item.setOutTxHash(record.getHashDest());
                         item.setState(mappingWithdrawRecordState(record.getState()).toString());
@@ -262,12 +263,4 @@ public class DefaultGatewayService implements GatewayService {
             return WithdrawRecordState.UNKNOWN;
         }
     }
-
-    private static String formatAmount(Double rawAmount, int decimals) {
-        if (rawAmount == null) {
-            return null;
-        }
-        return BigDecimal.valueOf(rawAmount).movePointRight(decimals).toPlainString();
-    }
-
 }

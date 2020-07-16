@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.vite.gateway.blockchain.model.*;
 import org.vite.gateway.blockchain.protocol.BlockchainFacade;
 import org.vite.gateway.model.enums.TransactionType;
+import org.vite.gateway.util.NumberUtil;
 import org.vitej.core.protocol.HttpService;
 import org.vitej.core.protocol.Vitej;
 import org.vitej.core.protocol.methods.Address;
@@ -162,7 +163,7 @@ public class ViteFacade implements BlockchainFacade {
         String token = transaction.getToken();
         int decimals = getDecimal(token);
         try {
-            BigInteger viteAmount = mapViteAmount(transaction.getAmount(), decimals);
+            BigInteger viteAmount = NumberUtil.toViteAmount(transaction.getAmount(), decimals);
             TokenId tokenId = new TokenId(token);
 
             TransactionParams params = new TransactionParams()
@@ -312,7 +313,7 @@ public class ViteFacade implements BlockchainFacade {
         transaction.setToken(token);
         transaction.setBlockHash(accountBlock.getHashRaw());
         BigInteger viteAmount = accountBlock.getAmount();
-        transaction.setAmount(parseViteAmount(viteAmount, decimals));
+        transaction.setAmount(NumberUtil.fromViteAmount(viteAmount, decimals));
         transaction.setFromAddress(accountBlock.getFromAddressRaw());
         transaction.setToAddress(accountBlock.getToAddressRaw());
         transaction.setFee(accountBlock.getFeeRaw());
@@ -340,14 +341,6 @@ public class ViteFacade implements BlockchainFacade {
         transaction.setConfirmations(confirmations);
 
         return transaction;
-    }
-
-    private static BigInteger mapViteAmount(String rawAmount, int decimals) {
-        return new BigDecimal(rawAmount).movePointRight(decimals).toBigInteger();
-    }
-
-    private static String parseViteAmount(BigInteger viteAmount, int decimals) {
-        return new BigDecimal(viteAmount).movePointLeft(decimals).toPlainString();
     }
 
     private static TransactionType mapTransactionType(Integer viteBlockType) {
