@@ -222,19 +222,21 @@ public class LitecoinFacade implements BlockchainFacade {
             JSONArray outs = result.getJSONArray("vout");
             for (int i = 0; i < outs.size(); i++) {
                 JSONObject out = outs.getJSONObject(i);
-                JSONArray addresses = out.getJSONObject("scriptPubKey").getJSONArray("addresses");
-                for (int j = 0; j < addresses.size(); j++) {
-                    String address = addresses.getString(j);
+                JSONObject script = out.getJSONObject("scriptPubKey");
+                if (script.containsKey("addresses")) {
+                    JSONArray addresses = script.getJSONArray("addresses");
+                    for (int j = 0; j < addresses.size(); j++) {
+                        String address = addresses.getString(j);
+                        Transaction transaction = new Transaction();
+                        transaction.setBlockchain(BLOCKCHAIN);
+                        transaction.setToken(TOKEN);
+                        transaction.setHash(result.getString("txid"));
+                        transaction.setConfirmations(0);
+                        transaction.setToAddress(address);
+                        transaction.setAmount(out.getString("value"));
 
-                    Transaction transaction = new Transaction();
-                    transaction.setBlockchain(BLOCKCHAIN);
-                    transaction.setToken(TOKEN);
-                    transaction.setHash(result.getString("txid"));
-                    transaction.setConfirmations(0);
-                    transaction.setToAddress(address);
-                    transaction.setAmount(out.getString("value"));
-
-                    transactions.add(transaction);
+                        transactions.add(transaction);
+                    }
                 }
             }
             return transactions;
