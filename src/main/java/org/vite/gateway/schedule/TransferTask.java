@@ -123,7 +123,15 @@ public class TransferTask extends AbstractStateMachine<TransferTask, CrossChainT
                     }
                     return;
                 }
-                if (lastConfirmations != transaction.getConfirmations()) {
+
+                boolean confirmed = blockchainFacade.isConfirm(transaction);
+                LOGGER.debug("Check transaction confirmation: {} -> {}", confirmed, transaction);
+
+                if (confirmed) {
+                    fire("TRANSACTION_CONFIRMED", transaction);
+                    // stop polling task
+                    this.cancel();
+                } else if (lastConfirmations != transaction.getConfirmations()) {
                     lastConfirmations = transaction.getConfirmations();
                     // update confirmations
                     if (to == CrossChainTransferState.SOURCE_TRANSACTION_FOUND) {
@@ -134,14 +142,6 @@ public class TransferTask extends AbstractStateMachine<TransferTask, CrossChainT
                         crossChainTransfer.setConfirmationsDest(lastConfirmations);
                     }
                     database.updateCrossChainTransfer(crossChainTransfer);
-                }
-                boolean confirmed = blockchainFacade.isConfirm(transaction);
-                LOGGER.debug("Check transaction confirmation: {} -> {}", confirmed, transaction);
-
-                if (confirmed) {
-                    fire("TRANSACTION_CONFIRMED", transaction);
-                    // stop polling task
-                    this.cancel();
                 }
             }
         };

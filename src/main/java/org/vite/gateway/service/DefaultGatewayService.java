@@ -164,14 +164,16 @@ public class DefaultGatewayService implements GatewayService {
             List<DepositRecords.DepositRecordItem> items = records.stream()
                     .map(record -> {
                         DepositRecords.DepositRecordItem item = new DepositRecords.DepositRecordItem();
+                        int confirmations = record.getConfirmationsSource().intValue();
+                        int confirmationsThreshold = blockchainDelegate.getOriginConfirmations();
                         item.setInTxHash(record.getHashSource());
                         // format amount and fee by decimals: 1.23 (4 decimals) -> 12300
                         item.setAmount(NumberUtil.toViteAmount(record.getAmount(), decimals));
                         item.setFee(NumberUtil.toViteAmount(record.getFeeSource(), decimals));
-                        item.setInTxConfirmedCount(record.getConfirmationsSource().intValue());
+                        item.setInTxConfirmedCount(confirmations > confirmationsThreshold ? confirmationsThreshold : confirmations);
                         item.setOutTxHash(record.getHashDest());
                         item.setState(mappingDepositRecordState(record.getState()).toString());
-                        item.setInTxConfirmationCount(blockchainDelegate.getOriginConfirmations());
+                        item.setInTxConfirmationCount(confirmationsThreshold);
                         item.setDateTime("" + record.getTransactionTimeSource().getTime());
                         return item;
                     })
@@ -205,14 +207,16 @@ public class DefaultGatewayService implements GatewayService {
             List<WithdrawRecords.WithdrawRecordItem> items = records.stream()
                     .map(record -> {
                         WithdrawRecords.WithdrawRecordItem item = new WithdrawRecords.WithdrawRecordItem();
+                        int confirmations = record.getConfirmationsSource().intValue();
+                        int confirmationsThreshold = blockchainDelegate.getMappingConfirmations();
                         item.setInTxHash(record.getHashSource());
                         // format amount and fee by decimals: 1.23 (4 decimals) -> 12300
                         item.setAmount(NumberUtil.toViteAmount(record.getAmount(), decimals));
                         item.setFee(NumberUtil.toViteAmount(record.getFeeSource(), decimals));
-                        item.setInTxConfirmedCount(record.getConfirmationsSource().intValue());
+                        item.setInTxConfirmedCount(confirmations > confirmationsThreshold ? confirmationsThreshold : confirmations);
                         item.setOutTxHash(record.getHashDest());
                         item.setState(mappingWithdrawRecordState(record.getState()).toString());
-                        item.setInTxConfirmationCount(blockchainDelegate.getMappingConfirmations());
+                        item.setInTxConfirmationCount(confirmationsThreshold);
                         item.setDateTime("" + record.getTransactionTimeSource().getTime());
                         return item;
                     })
