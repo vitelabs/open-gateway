@@ -317,6 +317,7 @@ public class ViteFacade implements BlockchainFacade {
         transaction.setFromAddress(accountBlock.getFromAddressRaw());
         transaction.setToAddress(accountBlock.getToAddressRaw());
         transaction.setFee(accountBlock.getFeeRaw());
+        transaction.setTimestamp(accountBlock.getTimestampRaw() * 1000);
 
         Integer blockType = accountBlock.getBlockType();
         transaction.setTransactionType(mapTransactionType(blockType));
