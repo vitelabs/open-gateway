@@ -116,11 +116,6 @@ public class TransferTask extends AbstractStateMachine<TransferTask, CrossChainT
                 Transaction transaction = blockchainFacade.getTransaction(hash);
                 if (transaction == null) {
                     LOGGER.info("Transaction not found: {}", hash);
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                     return;
                 }
 
