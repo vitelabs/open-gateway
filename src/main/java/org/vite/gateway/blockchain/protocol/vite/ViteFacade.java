@@ -144,16 +144,23 @@ public class ViteFacade implements BlockchainFacade {
         if (transaction == null) {
             return false;
         }
-        // find the receive block to check if the 'transfer' is confirmed
-        String receiveHash = transaction.getReferenceHash();
-        if (receiveHash == null) {
-            return false;
+
+        if (transaction.getTransactionType() == TransactionType.EXPENSE) {
+            // As a 'send transaction', find the receive block to check if the 'transfer' is confirmed
+            String receiveHash = transaction.getReferenceHash();
+            if (receiveHash == null) {
+                LOGGER.error("Reference Hash is not found for send transaction {}", transaction);
+                return false;
+            }
+            AccountBlock receiveBlock = fetchViteTransaction(receiveHash);
+            if (receiveBlock == null || receiveBlock.getConfirmations() == 0) {
+                LOGGER.error("Illegal Receive Block fetched: {}", receiveHash);
+                return false;
+            }
+            confirmations = receiveBlock.getConfirmations();
+        } else {
+            confirmations = transaction.getConfirmations();
         }
-        AccountBlock receiveBlock = fetchViteTransaction(receiveHash);
-        if (receiveBlock == null || receiveBlock.getConfirmations() == 0) {
-            return false;
-        }
-        confirmations = receiveBlock.getConfirmations();
 
         return confirmations >= CONFIRMATION_THRESHOLD;
     }
