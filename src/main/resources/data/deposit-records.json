@@ -17,6 +17,6 @@
       }
     ],
     "inTxExplorerFormat": "http://{$tx}",
-    "outTxExplorerFormat": "https://explorer.vite.net/transaction/{$tx}"
+    "outTxExplorerFormat": "https://vitescan.io/tx/%7B$tx%7D"
   }
 }
